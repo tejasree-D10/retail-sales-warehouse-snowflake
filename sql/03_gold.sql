@@ -10,7 +10,7 @@ join silver.customer_dim d
 on f.CUSTOMER_SK=d.CUSTOMER_SK
 group by d.state;
 
-select * from gold.sales_by_state ;
+select * from gold.sales_by_state;
 select * from silver.customer_dim;
 select * from silver.fact_sales;
 create or replace table gold.sales_by_year as
