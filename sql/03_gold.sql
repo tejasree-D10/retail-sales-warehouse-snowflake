@@ -1,7 +1,7 @@
-use warehouse COMPUTE_WH;
-use database SNOWFLAKE_LEARNING_DB;
+use warehouse compute_wh;
+use database snowflake_learning_db;
 create schema if not exists GOLD;
-create or replace table GOLD.SALES_BY_STATE as
+create or replace table gold.sales_by_state as
 select 
    d.state,
    sum(f.sales_price) as total_sales
@@ -10,17 +10,17 @@ join silver.customer_dim d
 on f.CUSTOMER_SK=d.CUSTOMER_SK
 group by d.state;
 
-select * from GOLD.SALES_BY_STATE;
+select * from gold.sales_by_state ;
 select * from silver.customer_dim;
 select * from silver.fact_sales;
-create or replace table GOLD.SALES_BY_YEAR as
+create or replace table gold.sales_by_year as
 select
   year(transaction_date) as sales_year,
   sum(sales_price) as total_sales
 from silver.fact_sales
 group by sales_year;
 
-select * from GOLD.SALES_BY_YEAR limit 5;
+select * from gold.sales_by_year limit 5;
 --sales by store every month
 create or replace table GOLD.MONTHLY_SALES as 
 select 
@@ -37,10 +37,10 @@ select
   group by store_id
   order by total_sales desc limit 10;
 
-  select count(*) from GOLD.SALES_BY_STATE;
-  select count(*) from GOLD.SALES_BY_YEAR;
-  select count(*) from GOLD.MONTHLY_SALES;
-  select count(*) from GOLD.TOP_STORES;
+  select count(*) from gold.sales_by_state;
+  select count(*) from gold.sales_by_year;
+  select count(*) from gold.monthly_sales;
+  select count(*) from gold.top_stores;
 
 
   alter table silver.fact_sales
